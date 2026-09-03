@@ -1,1 +1,317 @@
-(function(){var _b="KGZ1bmN0aW9uKCl7InVzZSBzdHJpY3QiO3ZhciB0PWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0b2FzdCcpLHR0PW51bGw7ZnVuY3Rpb24gc3QobSl7dC50ZXh0Q29udGVudD1tO3Quc3R5bGUub3BhY2l0eT0nMSc7dC5zdHlsZS50cmFuc2Zvcm09J3RyYW5zbGF0ZSgtNTAlLCAwKSc7Y2xlYXJUaW1lb3V0KHR0KTt0dD1zZXRUaW1lb3V0KGZ1bmN0aW9uKCl7dC5zdHlsZS5vcGFjaXR5PScwJzt0LnN0eWxlLnRyYW5zZm9ybT0ndHJhbnNsYXRlKC01MCUsIDEycHgpJzt9LDIyMDApO30KdmFyIGxtPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsZWdhbC1tb2RhbCcpLGxiPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsZWdhbC1iYWNrZHJvcCcpLGxjPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsZWdhbC1jbG9zZScpO2Z1bmN0aW9uIG9sKCl7bG0uY2xhc3NMaXN0LnJlbW92ZSgnaGlkZGVuJyk7fWZ1bmN0aW9uIGNsKCl7bG0uY2xhc3NMaXN0LmFkZCgnaGlkZGVuJyk7fQpkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCcub3Blbi1sZWdhbCcpLmZvckVhY2goZnVuY3Rpb24oZWwpe2VsLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJyxvbCk7fSk7CmxiLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJyxjbCk7bGMuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLGNsKTsKZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigna2V5ZG93bicsZnVuY3Rpb24oZSl7aWYoZS5rZXk9PT0nRXNjYXBlJyljbCgpO30pOwpkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCcubGVnYWwteWVhcicpLmZvckVhY2goZnVuY3Rpb24oZWwpe2VsLnRleHRDb250ZW50PW5ldyBEYXRlKCkuZ2V0RnVsbFllYXIoKTt9KTsKdmFyIHJ2PWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJy5yZXZlYWwnKTtpZignSW50ZXJzZWN0aW9uT2JzZXJ2ZXInIGluIHdpbmRvdyl7dmFyIGlvPW5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihmdW5jdGlvbihlbnRyaWVzKXtlbnRyaWVzLmZvckVhY2goZnVuY3Rpb24oZW50cnkpe2lmKGVudHJ5LmlzSW50ZXJzZWN0aW5nKXtlbnRyeS50YXJnZXQuY2xhc3NMaXN0LmFkZCgnaXMtdmlzaWJsZScpO2lvLnVub2JzZXJ2ZShlbnRyeS50YXJnZXQpO319KTt9LHt0aHJlc2hvbGQ6MC4xNX0pO3J2LmZvckVhY2goZnVuY3Rpb24oZWwpe2lvLm9ic2VydmUoZWwpO30pO31lbHNle3J2LmZvckVhY2goZnVuY3Rpb24oZWwpe2VsLmNsYXNzTGlzdC5hZGQoJ2lzLXZpc2libGUnKTt9KTt9CnZhciBkej1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZHJvcHpvbmUnKSxkemU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2Ryb3B6b25lLWVtcHR5JykscGk9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3ByZXZpZXctaW1nJyksZmk9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ZpbGUtaW5wdXQnKSx1Yj1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndXBsb2FkLWJ0bicpLG5iPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCduZXctcGhvdG8tYnRuJykscG89ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Byb2Nlc3Npbmctb3ZlcmxheScpLHNzPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzaGFyZS1zZWN0aW9uJyksc2I9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NoYXJlLWJ0bicpOwp2YXIgc2Y9bnVsbDsKZnVuY3Rpb24gbHAoZmlsZSl7aWYoIWZpbGV8fCFmaWxlLnR5cGUubWF0Y2goL15pbWFnZVwvLykpe3N0KCdQbGVhc2UgY2hvb3NlIGFuIGltYWdlIGZpbGUnKTtyZXR1cm47fXBvLmNsYXNzTGlzdC5yZW1vdmUoJ2hpZGRlbicpO3ZhciByPW5ldyBGaWxlUmVhZGVyKCk7ci5vbmxvYWQ9ZnVuY3Rpb24oZSl7c2V0VGltZW91dChmdW5jdGlvbigpe3NmPWZpbGU7cGkuc3JjPWUudGFyZ2V0LnJlc3VsdDtwaS5jbGFzc0xpc3QucmVtb3ZlKCdoaWRkZW4nKTtkemUuY2xhc3NMaXN0LmFkZCgnaGlkZGVuJyk7c3MuY2xhc3NMaXN0LnJlbW92ZSgnaGlkZGVuJyk7cG8uY2xhc3NMaXN0LmFkZCgnaGlkZGVuJyk7c3QoJ1Bob3RvIHJlYWR5IHRvIHNoYXJlJyk7fSw0MDApO307ci5yZWFkQXNEYXRhVVJMKGZpbGUpO30KdWIuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLGZ1bmN0aW9uKCl7ZmkuY2xpY2soKTt9KTsKZmkuYWRkRXZlbnRMaXN0ZW5lcignY2hhbmdlJyxmdW5jdGlvbihlKXtpZihlLnRhcmdldC5maWxlcyYmZS50YXJnZXQuZmlsZXNbMF0pbHAoZS50YXJnZXQuZmlsZXNbMF0pO30pOwpbJ2RyYWdlbnRlcicsJ2RyYWdvdmVyJ10uZm9yRWFjaChmdW5jdGlvbihldnQpe2R6LmFkZEV2ZW50TGlzdGVuZXIoZXZ0LGZ1bmN0aW9uKGUpe2UucHJldmVudERlZmF1bHQoKTtlLnN0b3BQcm9wYWdhdGlvbigpO2R6LmNsYXNzTGlzdC5hZGQoJ2RyYWctb3ZlcicpO30pO30pOwpbJ2RyYWdsZWF2ZScsJ2Ryb3AnXS5mb3JFYWNoKGZ1bmN0aW9uKGV2dCl7ZHouYWRkRXZlbnRMaXN0ZW5lcihldnQsZnVuY3Rpb24oZSl7ZS5wcmV2ZW50RGVmYXVsdCgpO2Uuc3RvcFByb3BhZ2F0aW9uKCk7ZHouY2xhc3NMaXN0LnJlbW92ZSgnZHJhZy1vdmVyJyk7fSk7fSk7CmR6LmFkZEV2ZW50TGlzdGVuZXIoJ2Ryb3AnLGZ1bmN0aW9uKGUpe2lmKGUuZGF0YVRyYW5zZmVyLmZpbGVzJiZlLmRhdGFUcmFuc2Zlci5maWxlc1swXSlscChlLmRhdGFUcmFuc2Zlci5maWxlc1swXSk7fSk7Cm5iLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJyxmdW5jdGlvbigpe3NmPW51bGw7ZmkudmFsdWU9Jyc7cGkuc3JjPScnO3BpLmNsYXNzTGlzdC5hZGQoJ2hpZGRlbicpO3NzLmNsYXNzTGlzdC5hZGQoJ2hpZGRlbicpO2R6ZS5jbGFzc0xpc3QucmVtb3ZlKCdoaWRkZW4nKTt9KTsKc2IuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLGFzeW5jIGZ1bmN0aW9uKCl7aWYoIXNmKXtzdCgnQWRkIGEgcGhvdG8gZmlyc3QnKTtyZXR1cm47fXZhciBzZD17ZmlsZXM6W3NmXSx0aXRsZTonTXkgTWV0YSBHbGFzcyBQaG90bycsdGV4dDonU2hhcmluZyB0byBteSBJbnN0YWdyYW0gU3RvcnknfTtpZihuYXZpZ2F0b3IuY2FuU2hhcmUmJm5hdmlnYXRvci5jYW5TaGFyZShzZCkpe3RyeXthd2FpdCBuYXZpZ2F0b3Iuc2hhcmUoc2QpO31jYXRjaChlcnIpe2lmKGVyciYmZXJyLm5hbWUhPT0nQWJvcnRFcnJvcicpe3N0KCdTaGFyaW5nIHdhcyBjYW5jZWxsZWQnKTt9fX1lbHNle3N0KCdEaXJlY3Qgc2hhcmluZyBpc25cdTIwMTl0IHN1cHBvcnRlZCBvbiB0aGlzIGJyb3dzZXIgXHUyMDE0IHBsZWFzZSBzaGFyZSB0aGUgcGhvdG8gdG8geW91ciBJbnN0YWdyYW0gU3RvcnkgbWFudWFsbHknKTt9fSk7CmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ2NvbnRleHRtZW51JyxmdW5jdGlvbihlKXtlLnByZXZlbnREZWZhdWx0KCk7fSk7CmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ2tleWRvd24nLGZ1bmN0aW9uKGUpe2lmKGUua2V5PT09J0YxMid8fChlLmN0cmxLZXkmJmUuc2hpZnRLZXkmJlsnSScsJ0onLCdDJ10uaW5jbHVkZXMoZS5rZXkpKXx8KGUuY3RybEtleSYmZS5rZXk9PT0nVScpKXtlLnByZXZlbnREZWZhdWx0KCk7fX0pOwp9KSgpOwo=";new Function(decodeURIComponent(escape(atob(_b))))();})();
+(function() {
+  "use strict";
+
+  // DOM refs
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.style.opacity = '1';
+    toastEl.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      toastEl.style.opacity = '0';
+      toastEl.style.transform = 'translate(-50%, 12px)';
+    }, 2800);
+  }
+
+  // Legal modal
+  var legalModal = document.getElementById('legal-modal');
+  var legalBackdrop = document.getElementById('legal-backdrop');
+  var legalClose = document.getElementById('legal-close');
+  function openLegal() { legalModal.classList.remove('hidden'); }
+  function closeLegal() { legalModal.classList.add('hidden'); }
+  document.querySelectorAll('.open-legal').forEach(function(el) {
+    el.addEventListener('click', openLegal);
+  });
+  legalBackdrop.addEventListener('click', closeLegal);
+  legalClose.addEventListener('click', closeLegal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLegal();
+  });
+  document.querySelectorAll('.legal-year').forEach(function(el) {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function(el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function(el) { el.classList.add('is-visible'); });
+  }
+
+  // Upload elements
+  var dropzone = document.getElementById('dropzone');
+  var dropzoneEmpty = document.getElementById('dropzone-empty');
+  var previewImg = document.getElementById('preview-img');
+  var fileInput = document.getElementById('file-input');
+  var uploadBtn = document.getElementById('upload-btn');
+  var newPhotoBtn = document.getElementById('new-photo-btn');
+  var processingOverlay = document.getElementById('processing-overlay');
+  var shareSection = document.getElementById('share-section');
+  var shareBtn = document.getElementById('share-btn');
+
+  // State
+  var selectedFile = null;        // original File
+  var sourceDataUrl = null;       // original image data URL
+  var convertedDataUrl = null;    // final converted image (3024×4032 + EXIF)
+  var pureBase64 = null;          // base64 without data URL prefix
+
+  // ---- Conversion functions (from first website) ----
+
+  function readOrientation(dataUrl) {
+    try {
+      var exif = piexif.load(dataUrl);
+      return exif["0th"][piexif.ImageIFD.Orientation] || 1;
+    } catch (e) {
+      return 1;
+    }
+  }
+
+  function drawCorrected(dataUrl, targetW, targetH, orientation) {
+    return new Promise(function(resolve, reject) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement("canvas");
+        var rotate90 = orientation >= 5 && orientation <= 8;
+        canvas.width = rotate90 ? targetH : targetW;
+        canvas.height = rotate90 ? targetW : targetH;
+        var ctx = canvas.getContext("2d");
+        switch (orientation) {
+          case 2: ctx.setTransform(-1, 0, 0, 1, targetW, 0); break;
+          case 3: ctx.setTransform(-1, 0, 0, -1, targetW, targetH); break;
+          case 4: ctx.setTransform(1, 0, 0, -1, 0, targetH); break;
+          case 5: ctx.setTransform(0, 1, 1, 0, 0, 0); break;
+          case 6: ctx.setTransform(0, 1, -1, 0, targetH, 0); break;
+          case 7: ctx.setTransform(0, -1, -1, 0, targetH, targetW); break;
+          case 8: ctx.setTransform(0, -1, 1, 0, 0, targetW); break;
+          default: ctx.setTransform(1, 0, 0, 1, 0, 0);
+        }
+        ctx.drawImage(img, 0, 0, targetW, targetH);
+        resolve(canvas.toDataURL("image/jpeg", 0.95));
+      };
+      img.onerror = reject;
+      img.src = dataUrl;
+    });
+  }
+
+  function buildExif(dataUrl) {
+    var exif;
+    try {
+      exif = piexif.load(dataUrl);
+    } catch (e) {
+      exif = { "0th": {}, "Exif": {}, "GPS": {}, "1st": {}, "thumbnail": null };
+    }
+    exif["GPS"] = {};
+    delete exif["0th"][piexif.ImageIFD.Software];
+    delete exif["0th"][piexif.ImageIFD.HostComputer];
+    delete exif["Exif"][piexif.ExifIFD.MakerNote];
+    delete exif["Exif"][piexif.ExifIFD.LensMake];
+    delete exif["Exif"][piexif.ExifIFD.LensModel];
+    delete exif["Exif"][piexif.ExifIFD.LensSpecification];
+    exif["0th"][piexif.ImageIFD.Make] = "Meta AI";
+    exif["0th"][piexif.ImageIFD.Model] = "Ray-Ban Meta Smart Glasses 2";
+    exif["0th"][piexif.ImageIFD.Orientation] = 1;
+    exif["Exif"][piexif.ExifIFD.ColorSpace] = 1;
+    exif["Exif"][piexif.ExifIFD.PixelXDimension] = 3024;
+    exif["Exif"][piexif.ExifIFD.PixelYDimension] = 4032;
+    return exif;
+  }
+
+  function runConversion() {
+    return new Promise(function(resolve, reject) {
+      var orientation = readOrientation(sourceDataUrl);
+      drawCorrected(sourceDataUrl, 3024, 4032, orientation)
+        .then(function(corrected) {
+          var exif = buildExif(sourceDataUrl);
+          var exifBytes = piexif.dump(exif);
+          convertedDataUrl = piexif.insert(exifBytes, corrected);
+          pureBase64 = convertedDataUrl.split(",")[1];
+          resolve({ convertedDataUrl: convertedDataUrl, pureBase64: pureBase64 });
+        })
+        .catch(reject);
+    });
+  }
+
+  function dataUrlToBlob(dataUrl) {
+    var arr = dataUrl.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1] || 'image/jpeg';
+    var bstr = atob(arr[1]);
+    var n = bstr.length;
+    var u8arr = new Uint8Array(n);
+    while (n--) { u8arr[n] = bstr.charCodeAt(n); }
+    return new Blob([u8arr], { type: mime });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = document.execCommand("copy");
+    ta.remove();
+    return ok ? Promise.resolve() : Promise.reject(new Error("copy failed"));
+  }
+
+  // ---- Share converted image ----
+  async function shareConvertedImage() {
+    if (!convertedDataUrl) {
+      showToast("Please convert the photo first.");
+      return;
+    }
+    var blob = dataUrlToBlob(convertedDataUrl);
+    var file = new File([blob], "meta-glasses-converted.jpg", { type: "image/jpeg" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "Meta Glasses Photo",
+          text: "Converted Ray-Ban Meta Glasses 3024×4032"
+        });
+        showToast("✅ Shared successfully!");
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") {
+          showToast("Sharing cancelled");
+          return;
+        }
+      }
+    }
+
+    // fallback download
+    var blobUrl = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.style.display = "none";
+    a.href = blobUrl;
+    a.download = "meta-glasses-converted.jpg";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+      URL.revokeObjectURL(blobUrl);
+      a.remove();
+    }, 4000);
+    showToast("💾 Image downloaded");
+  }
+
+  // ---- Load photo ----
+  function loadPhoto(file) {
+    if (!file || !file.type.match(/^image\//)) {
+      showToast('Please choose an image file');
+      return;
+    }
+    processingOverlay.classList.remove('hidden');
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      sourceDataUrl = e.target.result;
+      selectedFile = file;
+      previewImg.src = sourceDataUrl;
+      previewImg.classList.remove('hidden');
+      dropzoneEmpty.classList.add('hidden');
+      shareSection.classList.remove('hidden');
+
+      // reset converted state
+      convertedDataUrl = null;
+      pureBase64 = null;
+
+      processingOverlay.classList.add('hidden');
+      showToast('Photo loaded — tap Share to convert & post');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ---- Event binding ----
+  uploadBtn.addEventListener('click', function() { fileInput.click(); });
+  fileInput.addEventListener('change', function(e) {
+    if (e.target.files && e.target.files[0]) loadPhoto(e.target.files[0]);
+    fileInput.value = '';
+  });
+
+  ['dragenter', 'dragover'].forEach(function(evt) {
+    dropzone.addEventListener(evt, function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.add('drag-over');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function(evt) {
+    dropzone.addEventListener(evt, function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.remove('drag-over');
+    });
+  });
+  dropzone.addEventListener('drop', function(e) {
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      loadPhoto(e.dataTransfer.files[0]);
+    }
+  });
+
+  newPhotoBtn.addEventListener('click', function() {
+    selectedFile = null;
+    sourceDataUrl = null;
+    convertedDataUrl = null;
+    pureBase64 = null;
+    fileInput.value = '';
+    previewImg.src = '';
+    previewImg.classList.add('hidden');
+    shareSection.classList.add('hidden');
+    dropzoneEmpty.classList.remove('hidden');
+    showToast('Reset');
+  });
+
+  shareBtn.addEventListener('click', async function() {
+    if (!sourceDataUrl) {
+      showToast('Please select a photo first');
+      return;
+    }
+
+    if (convertedDataUrl) {
+      await shareConvertedImage();
+      return;
+    }
+
+    processingOverlay.classList.remove('hidden');
+    shareBtn.disabled = true;
+    shareBtn.style.opacity = '0.6';
+
+    try {
+      await runConversion();
+      // update preview to show converted image
+      previewImg.src = convertedDataUrl;
+      // copy Base64 silently
+      try {
+        await copyText(pureBase64);
+        showToast('✅ Converted! Base64 copied, sharing…');
+      } catch (e) {
+        showToast('✅ Converted! (Base64 copy skipped)');
+      }
+      await shareConvertedImage();
+    } catch (err) {
+      console.error(err);
+      showToast('❌ Conversion failed. Try another JPG.');
+    } finally {
+      processingOverlay.classList.add('hidden');
+      shareBtn.disabled = false;
+      shareBtn.style.opacity = '1';
+    }
+  });
+
+  // Disable context menu on images (optional)
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+
+})();
