@@ -32,6 +32,22 @@ casual copy-pasting, not a motivated developer. Don't rely on it to protect
 anything sensitive — there's no server-side logic or secrets here to expose
 either way, it's all cosmetic HTML/CSS/JS.
 
+## Other changes in this build
+
+- **Hero images are non-downloadable.** Both hero images use a `.no-save`
+  class (`pointer-events: none`, `-webkit-touch-callout: none`, drag
+  disabled) plus `draggable="false"`, so long-press on mobile and
+  right-click "Save Image As" on desktop do nothing.
+- **"Before You Begin" popup.** Clicking "Convert now" opens the steps
+  screen and immediately shows a popup: "Please read all steps carefully
+  for the best results," with an OK button, plus a note that video
+  conversion support is coming soon. The same "coming soon" note also
+  appears as a small badge on the steps screen itself.
+- **No emoji anywhere** — all icons are inline SVG (Lucide/Heroicons-style
+  line icons), matching the rest of the UI.
+- **Social/SEO metadata** was added to both pages: `description`,
+  Open Graph, and Twitter Card tags, including a preview image.
+
 ## Deploy on Render
 
 **Option A — Blueprint (easiest)**

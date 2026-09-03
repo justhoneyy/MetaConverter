@@ -4,6 +4,16 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Ray-Ban Meta Smart Glasses</title>
+<meta name="description" content="Convert any photo into a Meta Glass photo."/>
+<meta name="author" content="MetaConverter"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="MetaConverter — Convert Any Photo into a Meta Glass Photo"/>
+<meta property="og:description" content="MetaConverter transforms any ordinary photo into a premium Ray-Ban Meta Glass style photo in just a few taps. Upload an image, apply the Meta Glass effect, and share it straight to your Instagram Story — no design experience required. Every photo is processed locally in your browser, so nothing is ever uploaded to a server."/>
+<meta property="og:image" content="https://i.postimg.cc/vHzZNYjQ/file-0000000032388211954cece5c38af8db.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="MetaConverter — Convert Any Photo into a Meta Glass Photo"/>
+<meta name="twitter:description" content="Convert any photo into a Meta Glass photo. Upload an image, apply the effect, and share it directly to your Instagram Story."/>
+<meta name="twitter:image" content="https://i.postimg.cc/vHzZNYjQ/file-0000000032388211954cece5c38af8db.png"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="stylesheet" href="css/style.css"/>
 <script data-purpose="tailwind-config">
@@ -37,9 +47,9 @@ tailwind.config={theme:{extend:{colors:{'meta-gray':'#e5e7eb','meta-dark':'#1118
         <p class="text-[8.5px] sm:text-[10px] leading-tight text-white/90 sm:text-gray-600">&copy; <span class="legal-year">2026</span> MetaConverter. Not affiliated with Meta, Instagram, or Ray-Ban. <button class="open-legal underline underline-offset-2" type="button">Legal</button></p>
       </div>
       <!-- Mobile portrait crop, top-anchored -->
-      <img alt="Man wearing Ray-Ban Meta glasses" class="hero-image-in sm:hidden absolute inset-0 w-full h-full object-cover object-top opacity-95" src="https://i.postimg.cc/vHzZNYjQ/file-0000000032388211954cece5c38af8db.png"/>
+      <img alt="Man wearing Ray-Ban Meta glasses" class="no-save hero-image-in sm:hidden absolute inset-0 w-full h-full object-cover object-top opacity-95" draggable="false" src="https://i.postimg.cc/vHzZNYjQ/file-0000000032388211954cece5c38af8db.png"/>
       <!-- Tablet/desktop wide crop -->
-      <img alt="Man wearing Ray-Ban Meta glasses" class="hero-image-in hidden sm:block absolute inset-0 w-full h-full object-cover object-[70%_center] opacity-90 mix-blend-multiply" src="https://i.postimg.cc/3xkQF3QP/file-00000000a2688211836508081e2074b4.png"/>
+      <img alt="Man wearing Ray-Ban Meta glasses" class="no-save hero-image-in hidden sm:block absolute inset-0 w-full h-full object-cover object-[70%_center] opacity-90 mix-blend-multiply" draggable="false" src="https://i.postimg.cc/3xkQF3QP/file-00000000a2688211836508081e2074b4.png"/>
       <!-- Gradient so copy stays legible over the image on every screen size -->
       <div class="absolute inset-0 bg-gradient-to-t from-[#e6e6e6] via-[#e6e6e6]/55 to-transparent sm:from-[#e6e6e6]/95 sm:via-[#e6e6e6]/10 sm:to-transparent sm:bg-gradient-to-r"></div>
 
@@ -60,7 +70,7 @@ tailwind.config={theme:{extend:{colors:{'meta-gray':'#e5e7eb','meta-dark':'#1118
             Ray-Ban Meta Smart Glasses fit your life effortlessly&mdash;capturing what you see, hearing what matters, and helping you stay in the moment.
           </p>
           <div class="hero-in-3">
-            <button class="btn-convert go-to group text-sm sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-5 rounded-full w-full sm:w-auto" data-target="screen-steps" type="button">
+            <button class="btn-convert group text-sm sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-5 rounded-full w-full sm:w-auto" id="convert-now-btn" type="button">
               <span class="relative z-10 inline-flex items-center justify-center gap-2">
                 Convert now
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 12h14m0 0l-6-6m6 6l-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -85,7 +95,11 @@ tailwind.config={theme:{extend:{colors:{'meta-gray':'#e5e7eb','meta-dark':'#1118
 
     <div class="reveal is-visible mb-10 sm:mb-14">
       <h2 class="font-oswald text-3xl sm:text-5xl font-bold uppercase tracking-tighter mb-3">How to Convert a Normal Photo into a Meta Glass Photo</h2>
-      <p class="text-sm sm:text-base text-gray-600 max-w-md">Follow these three simple steps to apply the Meta Glass effect to your photo.</p>
+      <p class="text-sm sm:text-base text-gray-600 max-w-md mb-4">Follow these three simple steps to apply the Meta Glass effect to your photo.</p>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-100 border border-gray-200 rounded-full px-3.5 py-2">
+        <svg class="w-4 h-4 shrink-0 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 10l4.55-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.45.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg>
+        Video conversion support is coming soon
+      </div>
     </div>
 
     <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 content-center">
@@ -158,7 +172,7 @@ tailwind.config={theme:{extend:{colors:{'meta-gray':'#e5e7eb','meta-dark':'#1118
         </div>
         <div>
           <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Copyright Complaints</h4>
-          <p>If you believe content on this site infringes your copyright, please contact us at <a class="underline hover:text-black" href="mailto:legal@metaconverter.app">legal@metaconverter.app</a> with details of the material and your ownership rights, and we will respond promptly.</p>
+          <p>If you believe content on this site infringes your copyright, please contact us at <a class="underline hover:text-black" href="mailto:convertermeta@gmail.com">convertermeta@gmail.com</a> with details of the material and your ownership rights, and we will respond promptly.</p>
         </div>
       </div>
     </div>
@@ -167,6 +181,25 @@ tailwind.config={theme:{extend:{colors:{'meta-gray':'#e5e7eb','meta-dark':'#1118
 
 <!-- Toast -->
 <div class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 bg-black text-white text-xs sm:text-sm font-medium px-5 py-3 rounded-full shadow-xl opacity-0 pointer-events-none translate-y-3" id="toast"></div>
+
+<!-- ================= Steps Info Popup ================= -->
+<div class="fixed inset-0 z-[70] hidden" id="steps-info-modal">
+  <div class="absolute inset-0 bg-black/50" id="steps-info-backdrop"></div>
+  <div class="absolute inset-0 flex items-center justify-center p-5">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 sm:p-7 text-center">
+      <div class="mx-auto mb-4 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
+        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 003.5 20.5h17a1.5 1.5 0 001.39-2.46L13.71 3.86a1.5 1.5 0 00-2.42 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg>
+      </div>
+      <h3 class="font-oswald font-bold uppercase tracking-tighter text-xl mb-2">Before You Begin</h3>
+      <p class="text-sm text-gray-600 mb-4">Please read all steps carefully for the best results.</p>
+      <div class="flex items-center justify-center gap-2 text-xs font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-full px-3.5 py-2 mb-5">
+        <svg class="w-4 h-4 shrink-0 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 10l4.55-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.45.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg>
+        Video conversion support is coming soon
+      </div>
+      <button class="btn-primary bg-black text-white text-sm font-semibold px-8 py-3 rounded-full w-full" id="steps-info-ok" type="button">OK</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/main.js"></script>
 
