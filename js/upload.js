@@ -15,7 +15,7 @@
     }, 2800);
   }
 
-  // Legal modal
+  // Legal modal (unchanged)
   var legalModal = document.getElementById('legal-modal');
   var legalBackdrop = document.getElementById('legal-backdrop');
   var legalClose = document.getElementById('legal-close');
@@ -33,7 +33,7 @@
     el.textContent = new Date().getFullYear();
   });
 
-  // Scroll reveal
+  // Scroll reveal (unchanged)
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entries) {
@@ -67,8 +67,7 @@
   var pureBase64 = null;
   var isConverting = false;
 
-  // ---- Conversion functions ----
-
+  // ---- Conversion functions (unchanged) ----
   function readOrientation(dataUrl) {
     try {
       var exif = piexif.load(dataUrl);
@@ -166,7 +165,7 @@
     return ok ? Promise.resolve() : Promise.reject(new Error("copy failed"));
   }
 
-  // ---- Share converted image ----
+  // ---- Share converted image (UPDATED) ----
   async function shareConvertedImage() {
     if (!convertedDataUrl) {
       showToast("Please convert the photo first.");
@@ -175,6 +174,7 @@
     var blob = dataUrlToBlob(convertedDataUrl);
     var file = new File([blob], "meta-glasses-converted.jpg", { type: "image/jpeg" });
 
+    // Check if Web Share with files is supported and the file is shareable
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({
@@ -189,9 +189,11 @@
           showToast("Sharing cancelled");
           return;
         }
+        // Other errors: fall through to download
       }
     }
 
+    // Fallback: download the image
     var blobUrl = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.style.display = "none";
@@ -203,17 +205,16 @@
       URL.revokeObjectURL(blobUrl);
       a.remove();
     }, 4000);
-    showToast("💾 Image downloaded");
+    showToast("📥 Image downloaded — please share manually to Instagram from your gallery.");
   }
 
-  // ---- Load photo + auto-convert ----
+  // ---- Load photo + auto-convert (unchanged) ----
   function loadPhoto(file) {
     if (!file || !file.type.match(/^image\//)) {
       showToast('Please choose an image file');
       return;
     }
 
-    // Reset state
     convertedDataUrl = null;
     pureBase64 = null;
     isConverting = false;
@@ -225,26 +226,22 @@
       sourceDataUrl = e.target.result;
       selectedFile = file;
 
-      // Show original preview first
       previewImg.src = sourceDataUrl;
       previewImg.classList.remove('hidden');
       dropzoneEmpty.classList.add('hidden');
       shareSection.classList.remove('hidden');
 
-      // Auto-convert
       isConverting = true;
       runConversion()
         .then(function(result) {
           convertedDataUrl = result.convertedDataUrl;
           pureBase64 = result.pureBase64;
-          // Update preview to show converted image
           previewImg.src = convertedDataUrl;
           showToast('✅ Converted to Meta Glasses format!');
         })
         .catch(function(err) {
           console.error('Conversion error:', err);
           showToast('❌ Conversion failed. Try another JPG.');
-          // Keep original as fallback
         })
         .finally(function() {
           isConverting = false;
@@ -260,7 +257,7 @@
     reader.readAsDataURL(file);
   }
 
-  // ---- Event binding ----
+  // ---- Event binding (unchanged) ----
   uploadBtn.addEventListener('click', function() { fileInput.click(); });
 
   fileInput.addEventListener('change', function(e) {
@@ -312,13 +309,11 @@
       return;
     }
 
-    // If conversion is still running, wait
     if (isConverting) {
       showToast('⏳ Conversion in progress, please wait...');
       return;
     }
 
-    // If no converted image yet, try to convert now
     if (!convertedDataUrl) {
       processingOverlay.classList.remove('hidden');
       shareBtn.disabled = true;
@@ -340,7 +335,6 @@
       shareBtn.style.opacity = '1';
     }
 
-    // Share the converted image
     await shareConvertedImage();
   });
 
