@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://metaconverter.qd.je/sitemap.xml
