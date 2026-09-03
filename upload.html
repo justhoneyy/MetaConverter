@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Upload Your Photo — Ray-Ban Meta Smart Glasses</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+      height: 100%;
+    }
+
+    .font-oswald {
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .tracking-tighter {
+      letter-spacing: -0.05em;
+    }
+
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-badge { animation: float-y 3.2s ease-in-out infinite; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .float-badge { animation: none !important; }
+      .btn-convert::before { animation: none !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* Buttons */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* Convert-now CTA: layered gradient, shimmer sweep, lift on hover, subtle idle glow */
+    .btn-convert {
+      position: relative;
+      display: inline-flex;
+      overflow: hidden;
+      isolation: isolate;
+      color: #fff;
+      background: linear-gradient(135deg, #262626 0%, #000 60%, #000 100%);
+      box-shadow: 0 10px 24px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.04) inset;
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+    }
+    .btn-convert:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(0,0,0,.32), 0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+    .btn-convert:active { transform: translateY(-1px); }
+    .btn-convert::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      left: -60%;
+      width: 35%;
+      background: linear-gradient(115deg, transparent, rgba(255,255,255,.28), transparent);
+      transform: skewX(-18deg);
+      animation: btn-shimmer 3.2s ease-in-out infinite;
+    }
+    @keyframes btn-shimmer {
+      0% { left: -60%; }
+      45% { left: 130%; }
+      100% { left: 130%; }
+    }
+
+    .btn-ghost { transition: background-color .18s ease, color .18s ease, border-color .18s ease; }
+
+    /* Toast */
+    #toast {
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .dropzone { transition: border-color .2s ease, background-color .2s ease; }
+    .dropzone.drag-over { border-color: #2563eb; background-color: rgba(37,99,235,.06); }
+
+    .spinner {
+      width: 34px; height: 34px;
+      border: 3px solid rgba(255,255,255,.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'meta-gray': '#e5e7eb',
+            'meta-dark': '#111827',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="text-gray-900 antialiased overflow-x-hidden">
+
+<!-- ================= UPLOAD / TRY-ON ================= -->
+<section class="min-h-dvh" id="screen-upload">
+  <div class="max-w-xl mx-auto px-5 sm:px-8 py-8 sm:py-12 min-h-dvh flex flex-col">
+    <header class="flex items-center gap-3 mb-8 sm:mb-10">
+      <a aria-label="Back" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100" href="index.html#screen-steps">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </a>
+      <span class="text-xs font-semibold tracking-widest text-gray-500 uppercase">Step 2 of 2</span>
+    </header>
+
+    <div class="reveal is-visible max-w-xl mb-8">
+      <h2 class="font-oswald text-3xl sm:text-4xl font-bold uppercase tracking-tighter mb-3">Upload your photo</h2>
+      <p class="text-sm text-gray-600">Choose a photo, then share it directly to your Instagram Story.</p>
+    </div>
+
+    <div class="reveal is-visible">
+      <div class="dropzone relative bg-white rounded-2xl border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden" id="dropzone" style="aspect-ratio: 4/3;">
+        <img alt="Uploaded photo preview" class="w-full h-full object-cover hidden" id="preview-img"/>
+
+        <div class="text-center px-6" id="dropzone-empty">
+          <div class="mx-auto mb-4 w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center float-badge">
+            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+          </div>
+          <p class="text-sm font-semibold mb-1">Drop a photo here</p>
+          <p class="text-xs text-gray-500 mb-4">or choose a file &mdash; JPG or PNG</p>
+          <button class="btn-primary bg-black text-white text-xs font-semibold px-5 py-2.5 rounded-full" id="upload-btn" type="button">Choose photo</button>
+          <input accept="image/*" class="hidden" id="file-input" type="file"/>
+        </div>
+
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center gap-3 hidden" id="processing-overlay">
+          <div class="spinner"></div>
+          <p class="text-white text-xs font-semibold tracking-wide uppercase">Preparing your photo&hellip;</p>
+        </div>
+      </div>
+
+      <div class="mt-5 hidden" id="share-section">
+        <button class="btn-convert group text-sm sm:text-lg font-bold px-8 py-4 rounded-full w-full flex items-center justify-center" id="share-btn" type="button">
+          <span class="relative z-10 inline-flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 9.837a3.999 3.999 0 110-7.997 3.999 3.999 0 010 7.997zm6.406-9.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+            Share to Instagram
+          </span>
+        </button>
+        <button class="btn-ghost text-xs text-gray-500 mt-3 mx-auto block" id="new-photo-btn" type="button">Choose a different photo</button>
+      </div>
+    </div>
+
+    <footer class="mt-auto pt-10 text-[11px] text-gray-500 text-center sm:text-left">
+      <p>&copy; <span class="legal-year">2026</span> MetaConverter. All rights reserved. Not affiliated with Meta, Instagram, or Ray-Ban.</p>
+      <button class="open-legal underline underline-offset-2 hover:text-gray-800 mt-1" type="button">Terms &amp; Privacy</button>
+    </footer>
+  </div>
+</section>
+
+<!-- ================= Legal Modal ================= -->
+<div class="fixed inset-0 z-[60] hidden" id="legal-modal">
+  <div class="absolute inset-0 bg-black/50" id="legal-backdrop"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center">
+    <div class="bg-white w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[85dvh] sm:max-h-[80dvh] flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-gray-200 shrink-0">
+        <h3 class="font-oswald font-bold uppercase tracking-tighter text-lg">Legal Information</h3>
+        <button aria-label="Close" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center" id="legal-close" type="button">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </button>
+      </div>
+      <div class="overflow-y-auto px-5 sm:px-6 py-5 text-xs sm:text-sm text-gray-600 space-y-5">
+        <div>
+          <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Copyright Notice</h4>
+          <p>&copy; <span class="legal-year">2026</span> MetaConverter. All rights reserved. The MetaConverter name, logo, and website design are the property of MetaConverter and may not be reproduced, distributed, or used without prior written permission.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Trademark Disclaimer</h4>
+          <p>Ray-Ban&reg; is a registered trademark of Luxottica Group S.p.A. Meta&reg;, the Meta logo, and Instagram&reg; are trademarks of Meta Platforms, Inc. All other product names, logos, and brands mentioned on this site are the property of their respective owners. MetaConverter is an independent, unofficial tool and is not affiliated with, endorsed by, sponsored by, or otherwise officially connected with Ray-Ban, Luxottica Group, Meta Platforms, Inc., Instagram, or any of their subsidiaries or affiliates. Brand names are used solely for descriptive and identification purposes.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Terms of Use</h4>
+          <p>By using MetaConverter, you agree to use the service only for lawful purposes. You retain full ownership of any photo you upload. MetaConverter is provided &ldquo;as is&rdquo; without warranties of any kind, and MetaConverter is not liable for any indirect or incidental damages arising from use of the service.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Privacy Policy</h4>
+          <p>MetaConverter does not upload, store, or transmit your photos to any server &mdash; image handling happens locally in your browser and photos are shared only when you choose to share them. We do not sell or share your personal information with third parties.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900 uppercase text-xs tracking-wider mb-1.5">Copyright Complaints</h4>
+          <p>If you believe content on this site infringes your copyright, please contact us at <a class="underline hover:text-black" href="mailto:legal@metaconverter.app">legal@metaconverter.app</a> with details of the material and your ownership rights, and we will respond promptly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 bg-black text-white text-xs sm:text-sm font-medium px-5 py-3 rounded-full shadow-xl opacity-0 pointer-events-none translate-y-3" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- Toast ---------------- */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.style.opacity = '1';
+    toastEl.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.style.opacity = '0';
+      toastEl.style.transform = 'translate(-50%, 12px)';
+    }, 2200);
+  }
+
+  /* ---------------- Legal modal ---------------- */
+  var legalModal = document.getElementById('legal-modal');
+  var legalBackdrop = document.getElementById('legal-backdrop');
+  var legalClose = document.getElementById('legal-close');
+  function openLegal() { legalModal.classList.remove('hidden'); }
+  function closeLegal() { legalModal.classList.add('hidden'); }
+  document.querySelectorAll('.open-legal').forEach(function (el) {
+    el.addEventListener('click', openLegal);
+  });
+  legalBackdrop.addEventListener('click', closeLegal);
+  legalClose.addEventListener('click', closeLegal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLegal();
+  });
+  document.querySelectorAll('.legal-year').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+
+  /* ---------------- Scroll reveal ---------------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ================= Upload & Share ================= */
+  var dropzone = document.getElementById('dropzone');
+  var dropzoneEmpty = document.getElementById('dropzone-empty');
+  var previewImg = document.getElementById('preview-img');
+  var fileInput = document.getElementById('file-input');
+  var uploadBtn = document.getElementById('upload-btn');
+  var newPhotoBtn = document.getElementById('new-photo-btn');
+  var processingOverlay = document.getElementById('processing-overlay');
+  var shareSection = document.getElementById('share-section');
+  var shareBtn = document.getElementById('share-btn');
+
+  var selectedFile = null;
+
+  function loadPhoto(file) {
+    if (!file || !file.type.match(/^image\//)) {
+      showToast('Please choose an image file');
+      return;
+    }
+    processingOverlay.classList.remove('hidden');
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      setTimeout(function () {
+        selectedFile = file;
+        previewImg.src = e.target.result;
+        previewImg.classList.remove('hidden');
+        dropzoneEmpty.classList.add('hidden');
+        shareSection.classList.remove('hidden');
+        processingOverlay.classList.add('hidden');
+        showToast('Photo ready to share');
+      }, 400);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  uploadBtn.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function (e) {
+    if (e.target.files && e.target.files[0]) loadPhoto(e.target.files[0]);
+  });
+
+  ['dragenter', 'dragover'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropzone.classList.add('drag-over');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropzone.classList.remove('drag-over');
+    });
+  });
+  dropzone.addEventListener('drop', function (e) {
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) loadPhoto(e.dataTransfer.files[0]);
+  });
+
+  newPhotoBtn.addEventListener('click', function () {
+    selectedFile = null;
+    fileInput.value = '';
+    previewImg.src = '';
+    previewImg.classList.add('hidden');
+    shareSection.classList.add('hidden');
+    dropzoneEmpty.classList.remove('hidden');
+  });
+
+  shareBtn.addEventListener('click', async function () {
+    if (!selectedFile) { showToast('Add a photo first'); return; }
+    var shareData = {
+      files: [selectedFile],
+      title: 'My Meta Glass Photo',
+      text: 'Sharing to my Instagram Story'
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if (err && err.name !== 'AbortError') {
+          showToast('Sharing was cancelled');
+        }
+      }
+    } else {
+      showToast('Direct sharing isn\u2019t supported on this browser \u2014 please share the photo to your Instagram Story manually');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
