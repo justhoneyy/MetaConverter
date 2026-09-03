@@ -61,12 +61,13 @@
   var shareBtn = document.getElementById('share-btn');
 
   // State
-  var selectedFile = null;        // original File
-  var sourceDataUrl = null;       // original image data URL
-  var convertedDataUrl = null;    // final converted image (3024×4032 + EXIF)
-  var pureBase64 = null;          // base64 without data URL prefix
+  var selectedFile = null;
+  var sourceDataUrl = null;
+  var convertedDataUrl = null;
+  var pureBase64 = null;
+  var isConverting = false;
 
-  // ---- Conversion functions (from first website) ----
+  // ---- Conversion functions ----
 
   function readOrientation(dataUrl) {
     try {
@@ -191,7 +192,6 @@
       }
     }
 
-    // fallback download
     var blobUrl = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.style.display = "none";
@@ -206,36 +206,67 @@
     showToast("💾 Image downloaded");
   }
 
-  // ---- Load photo ----
+  // ---- Load photo + auto-convert ----
   function loadPhoto(file) {
     if (!file || !file.type.match(/^image\//)) {
       showToast('Please choose an image file');
       return;
     }
+
+    // Reset state
+    convertedDataUrl = null;
+    pureBase64 = null;
+    isConverting = false;
+
     processingOverlay.classList.remove('hidden');
     var reader = new FileReader();
+
     reader.onload = function(e) {
       sourceDataUrl = e.target.result;
       selectedFile = file;
+
+      // Show original preview first
       previewImg.src = sourceDataUrl;
       previewImg.classList.remove('hidden');
       dropzoneEmpty.classList.add('hidden');
       shareSection.classList.remove('hidden');
 
-      // reset converted state
-      convertedDataUrl = null;
-      pureBase64 = null;
-
-      processingOverlay.classList.add('hidden');
-      showToast('Photo loaded — tap Share to convert & post');
+      // Auto-convert
+      isConverting = true;
+      runConversion()
+        .then(function(result) {
+          convertedDataUrl = result.convertedDataUrl;
+          pureBase64 = result.pureBase64;
+          // Update preview to show converted image
+          previewImg.src = convertedDataUrl;
+          showToast('✅ Converted to Meta Glasses format!');
+        })
+        .catch(function(err) {
+          console.error('Conversion error:', err);
+          showToast('❌ Conversion failed. Try another JPG.');
+          // Keep original as fallback
+        })
+        .finally(function() {
+          isConverting = false;
+          processingOverlay.classList.add('hidden');
+        });
     };
+
+    reader.onerror = function() {
+      processingOverlay.classList.add('hidden');
+      showToast('Failed to read file');
+    };
+
     reader.readAsDataURL(file);
   }
 
   // ---- Event binding ----
   uploadBtn.addEventListener('click', function() { fileInput.click(); });
+
   fileInput.addEventListener('change', function(e) {
-    if (e.target.files && e.target.files[0]) loadPhoto(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      loadPhoto(e.target.files[0]);
+    }
     fileInput.value = '';
   });
 
@@ -246,6 +277,7 @@
       dropzone.classList.add('drag-over');
     });
   });
+
   ['dragleave', 'drop'].forEach(function(evt) {
     dropzone.addEventListener(evt, function(e) {
       e.preventDefault();
@@ -253,6 +285,7 @@
       dropzone.classList.remove('drag-over');
     });
   });
+
   dropzone.addEventListener('drop', function(e) {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       loadPhoto(e.dataTransfer.files[0]);
@@ -264,6 +297,7 @@
     sourceDataUrl = null;
     convertedDataUrl = null;
     pureBase64 = null;
+    isConverting = false;
     fileInput.value = '';
     previewImg.src = '';
     previewImg.classList.add('hidden');
@@ -278,38 +312,39 @@
       return;
     }
 
-    if (convertedDataUrl) {
-      await shareConvertedImage();
+    // If conversion is still running, wait
+    if (isConverting) {
+      showToast('⏳ Conversion in progress, please wait...');
       return;
     }
 
-    processingOverlay.classList.remove('hidden');
-    shareBtn.disabled = true;
-    shareBtn.style.opacity = '0.6';
-
-    try {
-      await runConversion();
-      // update preview to show converted image
-      previewImg.src = convertedDataUrl;
-      // copy Base64 silently
+    // If no converted image yet, try to convert now
+    if (!convertedDataUrl) {
+      processingOverlay.classList.remove('hidden');
+      shareBtn.disabled = true;
+      shareBtn.style.opacity = '0.6';
       try {
-        await copyText(pureBase64);
-        showToast('✅ Converted! Base64 copied, sharing…');
-      } catch (e) {
-        showToast('✅ Converted! (Base64 copy skipped)');
+        await runConversion();
+        previewImg.src = convertedDataUrl;
+        showToast('✅ Converted! Sharing now...');
+      } catch (err) {
+        console.error(err);
+        showToast('❌ Conversion failed. Try another JPG.');
+        processingOverlay.classList.add('hidden');
+        shareBtn.disabled = false;
+        shareBtn.style.opacity = '1';
+        return;
       }
-      await shareConvertedImage();
-    } catch (err) {
-      console.error(err);
-      showToast('❌ Conversion failed. Try another JPG.');
-    } finally {
       processingOverlay.classList.add('hidden');
       shareBtn.disabled = false;
       shareBtn.style.opacity = '1';
     }
+
+    // Share the converted image
+    await shareConvertedImage();
   });
 
-  // Disable context menu on images (optional)
+  // Disable context menu on images
   document.addEventListener('contextmenu', function(e) {
     if (e.target.tagName === 'IMG') e.preventDefault();
   });
